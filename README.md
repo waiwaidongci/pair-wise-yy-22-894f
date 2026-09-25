@@ -21,6 +21,30 @@ cp .env.example .env && docker compose up -d
 - 后端：进入 `backend` 后按技术栈运行开发命令，接口统一挂在 `/api`。
 
 
+## 修复方案退回补正流程
+
+方案页（`/plans`）支持专家与负责人之间的逐条退回补正闭环，替代线下口头反馈：
+
+1. **专家退回**：专家对处于「待审批（SUBMITTED）」的方案逐条填写补正要求与补正期限（至少一条，每条都必须有要求和期限），可附总体意见。方案随即进入「待补正（PENDING_CORRECTION）」。
+2. **字段锁定**：待补正期间原修复方法、风险评估和版本号只读锁定（后端更新接口返回 `423 PLAN_FIELDS_LOCKED`），不能被直接改动。
+3. **逐条处理**：负责人对每条补正填写处理说明并标记已处理；处理说明为空时后端返回 `400 CORRECTION_RESOLUTION_MISSING`。
+4. **重提生成新修订**：清单未全部处理时重提会被拒绝（`409 CORRECTION_ITEMS_OPEN`）；全部处理后重提，方案回到待审批，修订号 +1、版本号递增（如 `V1.0 → V2.0`），本次退回意见保留在修订历史中。
+5. **禁止直接批准**：存在未处理补正条目时，专家的批准操作同样返回 `409 CORRECTION_ITEMS_OPEN`。
+6. **页面可观测信息**：方案清单与详情展示待补正条数、当前责任人（待补正→负责人，待审批→专家）、每次修订记录（提交/退回/重提/批准、版本号、意见快照）。
+
+接口（角色由请求头 `x-role` / `x-user-id` 模拟，经 RBAC 中间件校验）：
+
+| 方法 | 路径 | 角色 | 说明 |
+|---|---|---|---|
+| POST | `/api/restoration-plan/:id/return` | EXPERT | 退回，body：`{ opinion?, items:[{requirement, deadline}] }` |
+| POST | `/api/restoration-plan/:planId/correction-items/:itemId/resolve` | RESTORER | 逐条处理，body：`{ resolution_note }` |
+| POST | `/api/restoration-plan/:id/resubmit` | RESTORER | 全部处理后重提，生成新修订 |
+| POST | `/api/restoration-plan/:id/approve` | EXPERT | 批准（存在未处理条目时拒绝） |
+| GET | `/api/restoration-plan/:id` | - | 方案详情：方案、补正清单、修订历史 |
+
+前端在后端不可达时自动回退到 `mocks/planWorkflowMock`，校验规则与后端一致，可离线演示完整流程。
+
+
 ## 技术栈
 
 | 层 | 技术 |
@@ -55,7 +79,8 @@ backend/src/routes, controllers, services, models, repositories, middlewares, co
 ## 枚举/常量出现位置清单
 
 - RelicCondition: constants/RelicCondition、types/RelicCondition、constructors、logTemplates、errorMessages、筛选器、展示组件/控制器均有引用。
-- PlanApprovalStatus: constants/PlanApprovalStatus、types/PlanApprovalStatus、constructors、logTemplates、errorMessages、筛选器、展示组件/控制器均有引用。
+- PlanApprovalStatus: constants/PlanApprovalStatus、types/PlanApprovalStatus、constructors/RestorationPlan(Correction|Revision)Constructor、logTemplates、errorMessages、utils/formatters、mocks/seedData、stores/RestorationPlanStore、pages/PlansPage、components/plans/*、components/common/StatusBadge、services/PlanCorrectionService、controllers/RestorationPlan*Controller、routes/RestorationPlan*Routes、database/init.sql 均有引用。新增取值 `PENDING_CORRECTION`（待补正）。
+- CorrectionItemStatus（PENDING / RESOLVED）与 PlanRevisionAction（SUBMIT / RETURN / RESUBMIT / APPROVE）: 前后端 constants/CorrectionItemStatus、types/RestorationPlanCorrection、types/RestorationPlanRevision、constructors、logTemplates（RestorationPlanCorrection）、statusText、components/plans/CorrectionChecklist、components/plans/RevisionHistory、services/PlanCorrectionService 均有引用。
 - DamageSeverity: constants/DamageSeverity、types/DamageSeverity、constructors、logTemplates、errorMessages、筛选器、展示组件/控制器均有引用。
 
 ## 为什么会牵一发动全身

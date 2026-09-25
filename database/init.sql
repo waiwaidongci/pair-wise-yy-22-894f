@@ -28,8 +28,41 @@ CREATE TABLE IF NOT EXISTS restoration_plan (
   plan_title TEXT,
   method TEXT,
   risk_assessment TEXT,
+  version_no TEXT DEFAULT 'V1.0',
+  revision_no INTEGER DEFAULT 1,
   approval_status TEXT,
-  owner_id TEXT
+  owner_id TEXT,
+  reviewer_id TEXT,
+  current_assignee_id TEXT
+);
+
+-- 退回补正清单：专家退回时逐条写入补正要求与期限，负责人逐条填写处理说明
+CREATE TABLE IF NOT EXISTS restoration_plan_correction (
+  id INTEGER PRIMARY KEY,
+  plan_id INTEGER,
+  revision_no INTEGER,
+  item_no INTEGER,
+  requirement TEXT,
+  deadline TEXT,
+  status TEXT,
+  resolution_note TEXT,
+  created_by TEXT,
+  created_at TEXT,
+  resolved_at TEXT
+);
+
+-- 方案修订历史：提交/退回/重提/批准均留痕，旧审查意见随修订永久保留
+CREATE TABLE IF NOT EXISTS restoration_plan_revision (
+  id INTEGER PRIMARY KEY,
+  plan_id INTEGER,
+  revision_no INTEGER,
+  version_no TEXT,
+  action TEXT,
+  method_snapshot TEXT,
+  risk_assessment_snapshot TEXT,
+  review_opinion TEXT,
+  actor_id TEXT,
+  created_at TEXT
 );
 
 CREATE TABLE IF NOT EXISTS restoration_step (

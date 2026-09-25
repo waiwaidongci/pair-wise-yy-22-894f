@@ -7,8 +7,12 @@ export const createDefaultRestorationPlan = (overrides: Partial<RestorationPlan>
   plan_title: "plan title 1" as never,
   method: "method 1" as never,
   risk_assessment: "risk assessment 1" as never,
-  approval_status: "SUBMITTED" as never,
+  version_no: "V1.0",
+  revision_no: 1,
+  approval_status: "DRAFT",
   owner_id: 1 as never,
+  reviewer_id: null,
+  current_assignee_id: 1 as never,
   ...overrides
 });
 

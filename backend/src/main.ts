@@ -8,6 +8,7 @@ import { errorHandlerMiddleware } from "./middlewares/errorHandlerMiddleware";
 import relicItemRoutes from "./routes/RelicItemRoutes";
 import damageRecordRoutes from "./routes/DamageRecordRoutes";
 import restorationPlanRoutes from "./routes/RestorationPlanRoutes";
+import restorationPlanCorrectionRoutes from "./routes/RestorationPlanCorrectionRoutes";
 import restorationStepRoutes from "./routes/RestorationStepRoutes";
 import imageVersionRoutes from "./routes/ImageVersionRoutes";
 
@@ -21,6 +22,7 @@ app.get("/health", (_req, res) => res.json({ status: "ok", service: "relic-resto
 app.use("/api/relic-item", relicItemRoutes);
 app.use("/api/damage-record", damageRecordRoutes);
 app.use("/api/restoration-plan", restorationPlanRoutes);
+app.use("/api/restoration-plan/:planId/correction-items", restorationPlanCorrectionRoutes);
 app.use("/api/restoration-step", restorationStepRoutes);
 app.use("/api/image-version", imageVersionRoutes);
 app.use(errorHandlerMiddleware);
