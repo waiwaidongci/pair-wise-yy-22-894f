@@ -5,6 +5,9 @@ export interface RestorationPlan {
   plan_title: string;
   method: string;
   risk_assessment: string;
+  version_no: string;
+  revision_no: number;
   approval_status: string;
   owner_id: number;
+  open_correction_count?: number;
 }

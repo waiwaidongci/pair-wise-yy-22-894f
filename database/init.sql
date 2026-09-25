@@ -28,8 +28,38 @@ CREATE TABLE IF NOT EXISTS restoration_plan (
   plan_title TEXT,
   method TEXT,
   risk_assessment TEXT,
+  version_no TEXT,
+  revision_no INTEGER,
   approval_status TEXT,
   owner_id TEXT
+);
+
+CREATE TABLE IF NOT EXISTS plan_correction_item (
+  id INTEGER PRIMARY KEY,
+  plan_id INTEGER,
+  revision_no INTEGER,
+  item_no INTEGER,
+  requirement TEXT,
+  deadline TEXT,
+  raised_by INTEGER,
+  raised_at TEXT,
+  status TEXT,
+  resolution_note TEXT,
+  resolved_by INTEGER,
+  resolved_at TEXT
+);
+
+CREATE TABLE IF NOT EXISTS plan_revision (
+  id INTEGER PRIMARY KEY,
+  plan_id INTEGER,
+  revision_no INTEGER,
+  version_no TEXT,
+  method TEXT,
+  risk_assessment TEXT,
+  change_note TEXT,
+  reason TEXT,
+  created_by INTEGER,
+  created_at TEXT
 );
 
 CREATE TABLE IF NOT EXISTS restoration_step (

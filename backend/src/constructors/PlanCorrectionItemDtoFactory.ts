@@ -1,0 +1,1 @@
+export const createPlanCorrectionItemDto = (overrides = {}) => ({ id: 1, plan_id: 1, revision_no: 1, item_no: 1, requirement: "correction requirement 1", deadline: "2026-07-05", raised_by: 90, raised_at: "2026-06-25T09:00:00Z", status: "OPEN", resolution_note: "", resolved_by: null, resolved_at: null, ...overrides });

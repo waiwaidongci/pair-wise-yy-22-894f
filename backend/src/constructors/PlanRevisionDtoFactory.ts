@@ -1,0 +1,1 @@
+export const createPlanRevisionDto = (overrides = {}) => ({ id: 1, plan_id: 1, revision_no: 1, version_no: "V1.0", method: "method 1", risk_assessment: "risk assessment 1", change_note: "initial draft", reason: "CREATE", created_by: 1, created_at: "2026-06-11T09:00:00Z", ...overrides });

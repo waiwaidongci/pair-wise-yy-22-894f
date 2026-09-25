@@ -74,6 +74,8 @@ export const mockData = {
       "plan_title": "plan title 1",
       "method": "method 1",
       "risk_assessment": "risk assessment 1",
+      "version_no": "V1.0",
+      "revision_no": 1,
       "approval_status": "SUBMITTED",
       "owner_id": 1
     },
@@ -84,6 +86,8 @@ export const mockData = {
       "plan_title": "plan title 2",
       "method": "method 2",
       "risk_assessment": "risk assessment 2",
+      "version_no": "V1.0",
+      "revision_no": 1,
       "approval_status": "APPROVED",
       "owner_id": 2
     },
@@ -92,10 +96,120 @@ export const mockData = {
       "relic_id": 3,
       "damage_record_id": 3,
       "plan_title": "plan title 3",
+      "method": "method 3 revised",
+      "risk_assessment": "risk assessment 3 revised",
+      "version_no": "V1.1",
+      "revision_no": 2,
+      "approval_status": "RETURNED",
+      "owner_id": 3
+    }
+  ],
+  "planCorrectionItem": [
+    {
+      "id": 1,
+      "plan_id": 3,
+      "revision_no": 1,
+      "item_no": 1,
+      "requirement": "correction requirement 1",
+      "deadline": "2026-06-20",
+      "raised_by": 90,
+      "raised_at": "2026-06-14T09:00:00Z",
+      "status": "RESOLVED",
+      "resolution_note": "resolution note 1",
+      "resolved_by": 3,
+      "resolved_at": "2026-06-18T09:00:00Z"
+    },
+    {
+      "id": 2,
+      "plan_id": 3,
+      "revision_no": 1,
+      "item_no": 2,
+      "requirement": "correction requirement 2",
+      "deadline": "2026-06-20",
+      "raised_by": 90,
+      "raised_at": "2026-06-14T09:00:00Z",
+      "status": "RESOLVED",
+      "resolution_note": "resolution note 2",
+      "resolved_by": 3,
+      "resolved_at": "2026-06-18T09:00:00Z"
+    },
+    {
+      "id": 3,
+      "plan_id": 3,
+      "revision_no": 2,
+      "item_no": 1,
+      "requirement": "correction requirement 3",
+      "deadline": "2026-07-05",
+      "raised_by": 90,
+      "raised_at": "2026-06-25T09:00:00Z",
+      "status": "RESOLVED",
+      "resolution_note": "resolution note 3",
+      "resolved_by": 3,
+      "resolved_at": "2026-06-28T09:00:00Z"
+    },
+    {
+      "id": 4,
+      "plan_id": 3,
+      "revision_no": 2,
+      "item_no": 2,
+      "requirement": "correction requirement 4",
+      "deadline": "2026-07-05",
+      "raised_by": 90,
+      "raised_at": "2026-06-25T09:00:00Z",
+      "status": "OPEN",
+      "resolution_note": "",
+      "resolved_by": null,
+      "resolved_at": null
+    }
+  ],
+  "planRevision": [
+    {
+      "id": 1,
+      "plan_id": 1,
+      "revision_no": 1,
+      "version_no": "V1.0",
+      "method": "method 1",
+      "risk_assessment": "risk assessment 1",
+      "change_note": "initial draft",
+      "reason": "CREATE",
+      "created_by": 1,
+      "created_at": "2026-06-11T09:00:00Z"
+    },
+    {
+      "id": 2,
+      "plan_id": 2,
+      "revision_no": 1,
+      "version_no": "V1.0",
+      "method": "method 2",
+      "risk_assessment": "risk assessment 2",
+      "change_note": "initial draft",
+      "reason": "CREATE",
+      "created_by": 2,
+      "created_at": "2026-06-12T09:00:00Z"
+    },
+    {
+      "id": 3,
+      "plan_id": 3,
+      "revision_no": 1,
+      "version_no": "V1.0",
       "method": "method 3",
       "risk_assessment": "risk assessment 3",
-      "approval_status": "DRAFT",
-      "owner_id": 3
+      "change_note": "initial draft",
+      "reason": "CREATE",
+      "created_by": 3,
+      "created_at": "2026-06-13T09:00:00Z"
+    },
+    {
+      "id": 4,
+      "plan_id": 3,
+      "revision_no": 2,
+      "version_no": "V1.1",
+      "method": "method 3 revised",
+      "risk_assessment": "risk assessment 3 revised",
+      "change_note": "resubmit after correction round 1",
+      "reason": "RESUBMIT",
+      "created_by": 3,
+      "created_at": "2026-06-22T09:00:00Z"
     }
   ],
   "restorationStep": [

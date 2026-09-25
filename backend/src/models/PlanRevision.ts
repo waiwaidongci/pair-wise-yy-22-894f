@@ -1,0 +1,1 @@
+export interface PlanRevision { id: number; plan_id: number; revision_no: number; version_no: string; method: string; risk_assessment: string; change_note: string; reason: string; created_by: number; created_at: string }

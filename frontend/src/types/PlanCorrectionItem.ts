@@ -1,0 +1,14 @@
+export interface PlanCorrectionItem {
+  id: number;
+  plan_id: number;
+  revision_no: number;
+  item_no: number;
+  requirement: string;
+  deadline: string;
+  raised_by: number;
+  raised_at: string;
+  status: string;
+  resolution_note: string;
+  resolved_by: number | null;
+  resolved_at: string | null;
+}
